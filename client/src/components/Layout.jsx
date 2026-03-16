@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import { ShoppingCart, Handshake, LayoutDashboard, Menu, X } from 'lucide-react';
+import { ShoppingCart, Handshake, LayoutDashboard, Menu, X, Bell, Info } from 'lucide-react';
 
 const Layout = ({ children }) => {
     const { mode, setMode, cart, getTotal } = useApp();
     const [cartOpen, setCartOpen] = useState(false);
+    const [notifOpen, setNotifOpen] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
+
+    const notifications = [
+        { id: 1, title: 'خصومات حصرية', body: 'خصم 20% على الملابس الموحدة التابعة لمتجر الأناقة.', time: 'منذ ساعتين' },
+        { id: 2, title: 'مندوب جديد', body: 'انضم أحمد السعدي كشريك جديد في منطقتك.', time: 'منذ 5 ساعات' },
+    ];
 
     return (
         <div className="layout-root">
@@ -36,6 +43,40 @@ const Layout = ({ children }) => {
                         </div>
 
                         <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+                            <Link to="/about" className="glass-panel" style={{ width: '40px', height: '40px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--t1)' }} title="من نحن">
+                                <Info size={20} />
+                            </Link>
+                            
+                            <div style={{ position: 'relative' }}>
+                                <button className="glass-panel" onClick={() => setNotifOpen(!notifOpen)} style={{ width: '40px', height: '40px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--t1)', border: 'none', cursor: 'pointer' }}>
+                                    <Bell size={20} />
+                                    <span style={{ position: 'absolute', top: '10px', right: '10px', width: '8px', height: '8px', background: 'var(--pink)', borderRadius: '50%', border: '2px solid var(--bg1)' }}></span>
+                                </button>
+                                
+                                <AnimatePresence>
+                                    {notifOpen && (
+                                        <motion.div 
+                                            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                                            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                            className="glass-panel" 
+                                            style={{ position: 'absolute', top: '55px', left: 0, width: '300px', padding: '20px', zIndex: 100, borderRadius: '20px' }}
+                                        >
+                                            <h4 style={{ marginBottom: '15px', fontWeight: 800 }}>الإشعارات الذكية</h4>
+                                            <div style={{ display: 'grid', gap: '15px' }}>
+                                                {notifications.map(n => (
+                                                    <div key={n.id} style={{ paddingBottom: '10px', borderBottom: '1px solid var(--border)' }}>
+                                                        <div style={{ fontWeight: 700, fontSize: '13px', marginBottom: '2px' }}>{n.title}</div>
+                                                        <div style={{ fontSize: '11px', color: 'var(--t3)', marginBottom: '5px' }}>{n.body}</div>
+                                                        <div style={{ fontSize: '10px', color: 'var(--p1)', fontWeight: 800 }}>{n.time}</div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+
                             <Link to="/representative" className="glass-panel" style={{ width: '40px', height: '40px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--t1)' }} title="بوابة المندوبين">
                                 <Handshake size={20} />
                             </Link>
