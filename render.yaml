@@ -1,0 +1,27 @@
+services:
+  # Backend Server
+  - type: web
+    name: multi-vendor-api
+    runtime: node
+    plan: free # Change to starter if you need persistence
+    rootDir: server
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: PORT
+        value: 5000
+
+  # Frontend Site
+  - type: web
+    name: multi-vendor-client
+    runtime: static
+    rootDir: client
+    buildCommand: npm install && npm run build
+    publishDir: dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          name: multi-vendor-api
+          type: web
+          property: host
+        suffix: /api

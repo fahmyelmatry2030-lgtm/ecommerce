@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap');
+
+:root {
+  --p1: #7C3AED;
+  --p2: #A855F7;
+  --p3: #C084FC;
+  --p-glow: rgba(124,58,237,0.4);
+  --gold: #F59E0B;
+  --gold2: #FCD34D;
+  --pink: #EC4899;
+  --green: #10B981;
+  --bg0: #040608;
+  --bg1: #0A0F1E;
+  --bg2: #12182B;
+  --bg3: #1A223F;
+  --card: rgba(17, 24, 39, 0.7);
+  --glass: rgba(10, 15, 30, 0.85);
+  --border: rgba(124, 58, 237, 0.2);
+  --blight: rgba(255, 255, 255, 0.03);
+  --t1: #FFFFFF;
+  --t2: #A1A1AA;
+  --t3: #71717A;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+* {
+  margin: 0; padding: 0; box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+html {
+  direction: rtl; scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Cairo', 'Tajawal', sans-serif;
+  background: var(--bg0);
+  color: var(--t1);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* --- Layout Utils --- */
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.mesh-bg {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+}
+.mesh-bg::before {
+  content: ''; position: absolute; width: 100vw; height: 100vh;
+  background: 
+    radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 20% 80%, rgba(236, 72, 153, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+  filter: blur(80px);
+}
+
+/* --- Components --- */
+.glass-panel {
+  background: var(--glass);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 12px 28px; border-radius: 14px; font-weight: 700;
+  transition: all 0.3s var(--ease); cursor: pointer; border: none;
+  font-family: inherit; gap: 8px; text-decoration: none;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--p1), var(--p2));
+  color: white; box-shadow: 0 4px 15px var(--p-glow);
+}
+.btn-primary:hover {
+  transform: translateY(-2px); box-shadow: 0 8px 25px var(--p-glow);
+}
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: black;
+}
+.btn-gold:hover {
+  transform: translateY(-2px); opacity: 0.9;
+}
+
+/* --- Navigation --- */
+.nav {
+  height: 80px; display: flex; align-items: center;
+  position: sticky; top: 0; z-index: 1000;
+  margin-top: 10px; border-radius: 20px;
+}
+
+.nav-content {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%;
+}
+
+.mode-toggle {
+  display: flex; background: rgba(255,255,255,0.05);
+  padding: 4px; border-radius: 12px; gap: 4px;
+}
+.mode-btn {
+  padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer;
+  background: transparent; color: var(--t2); font-weight: 700;
+  transition: all 0.2s var(--ease);
+}
+.mode-btn.active.wholesale { background: var(--p1); color: white; }
+.mode-btn.active.retail { background: var(--gold); color: black; }
+
+/* --- Grid System --- */
+.stores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px; padding: 40px 0;
+}
+
+.store-card {
+  padding: 30px; border-radius: 24px; transition: all 0.4s var(--spring);
+  position: relative; overflow: hidden; height: 100%;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+}
+.store-card:hover { transform: translateY(-10px) scale(1.02); }
+
+.store-emoji {
+  width: 80px; height: 80px; border-radius: 20px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40px; margin-bottom: 20px;
+}
+
+/* --- Section Heads --- */
+.section-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 60px; margin-bottom: 20px;
+}
+.section-title {
+  font-size: 28px; font-weight: 900; position: relative;
+  padding-right: 15px;
+}
+.section-title::before {
+  content: ''; position: absolute; right: 0; top: 20%; height: 60%;
+  width: 5px; background: var(--p1); border-radius: 10px;
+}
+
+/* --- Hero Section --- */
+.hero {
+  padding: 100px 0 60px; text-align: center;
+}
+.hero h1 {
+  font-size: clamp(32px, 5vw, 56px); font-weight: 900; margin-bottom: 20px;
+  line-height: 1.1;
+}
+.hero p {
+  color: var(--t2); font-size: 18px; max-width: 600px; margin: 0 auto 40px;
+}
+
+/* --- Product Cards --- */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.product-card {
+  border-radius: 24px; padding: 20px;
+}
+
+/* --- Anim --- */
+.animate-fade {
+  animation: fadeIn 0.8s var(--ease) forwards;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
