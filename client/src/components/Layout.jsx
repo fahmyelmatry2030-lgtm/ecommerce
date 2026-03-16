@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { ShoppingCart, Handshake, LayoutDashboard, Menu, X } from 'lucide-react';
 
@@ -7,6 +7,7 @@ const Layout = ({ children }) => {
     const { mode, setMode, cart, getTotal } = useApp();
     const [cartOpen, setCartOpen] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
 
     return (
         <div className="layout-root">
@@ -107,7 +108,8 @@ const Layout = ({ children }) => {
                                     <span style={{ color: 'var(--t2)' }}>إجمالي الطلب</span>
                                     <span style={{ fontSize: '24px', fontWeight: 900, color: 'var(--gold)' }}>{getTotal().toLocaleString()} IQD</span>
                                 </div>
-                                <button className="btn btn-gold" style={{ width: '100%', padding: '18px', fontSize: '18px' }}>🚀 إرسال الطلب عبر الواتساب</button>
+                                <button className="btn btn-gold" style={{ width: '100%', padding: '18px', fontSize: '18px', marginBottom: '10px' }} onClick={() => { setCartOpen(false); navigate('/checkout'); }}>💳 الدفع بالبطاقة البنكية</button>
+                                <button className="btn btn-primary" style={{ width: '100%', padding: '18px', fontSize: '18px', background: '#25D366', border: 'none' }}>🚀 إرسال الطلب عبر الواتساب</button>
                             </div>
                         )}
                     </aside>

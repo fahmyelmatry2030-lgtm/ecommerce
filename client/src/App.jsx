@@ -7,6 +7,7 @@ import Store from './pages/Store';
 import Representative from './pages/Representative';
 import Dashboard from './pages/Dashboard';
 import ProductDetails from './pages/ProductDetails';
+import Checkout from './pages/Checkout';
 
 function App() {
   console.log('App Rendering...');
@@ -19,6 +20,7 @@ function App() {
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/representative" element={<Representative />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </Layout>
     </AppProvider>
